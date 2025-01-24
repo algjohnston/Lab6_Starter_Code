@@ -22,10 +22,9 @@ public partial class EnterAirportDetailsPopup : Popup
         InitializeComponent();
         if (airport != null) // only null if it's an edit
         {
+            TitleLabel.Text = "Edit Airport";
             isEdit = true; // technically we could use whether airportToEditId is null to check this, but this is more clear
             IdLabel.IsVisible = false;
-            IdEntry.IsVisible = false;
-            IdEntry.Text = airport.Id; // This is not visible ???
             airportToEditId = airport.Id;
             CityEntry.Text = airport.Name;
             Calendar.View = CalendarView.Month;
@@ -34,6 +33,7 @@ public partial class EnterAirportDetailsPopup : Popup
         }
         else // Default the Calendar to Today's date
         {
+            TitleLabel.Text = "Add Airport";
             DateTime today = DateTime.Today;
             Calendar.View = CalendarView.Month;
             Calendar.DisplayDate = today;

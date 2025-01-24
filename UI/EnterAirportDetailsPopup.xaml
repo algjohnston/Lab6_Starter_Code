@@ -13,80 +13,81 @@
           HeightRequest="550">
 
         <!-- Title -->
-        <Label Grid.Row="0" 
+        <Label x:Name="TitleLabel"
+               Grid.Row="0"
                Grid.ColumnSpan="2"
-               Text="Enter Details" 
+               Text="Enter Details"
                FontSize="24" TextColor="#2C3E50"
                HorizontalOptions="Center"
-               Margin="0,10"/>
+               Margin="0,10" />
 
         <!-- ID Input -->
-        <HorizontalStackLayout 
-            Grid.Row="1" 
+        <HorizontalStackLayout
+            Grid.Row="1"
             Grid.ColumnSpan="2"
             Spacing="10"
             VerticalOptions="Center">
-            <Label 
-                   x:Name="IdLabel"
-                   Text="Id"
-                   IsVisible="True"
-                   WidthRequest="80"
-                   VerticalOptions="Center"
-                   TextColor="#34495E" />
+            <Label
+                x:Name="IdLabel"
+                Text="Id"
+                IsVisible="True"
+                WidthRequest="80"
+                VerticalOptions="Center"
+                TextColor="#34495E" />
 
-            <Entry 
-                   x:Name="IdEntry"
-                   Placeholder="Enter ID"
-                   Text="KGRB"
-                   IsVisible="True"
-                   HorizontalOptions="Fill"
-                   BackgroundColor="#ECF0F1"
-                   TextColor="#2C3E50"
-                   MaxLength="5" 
-                   WidthRequest="200" />
+            <Entry
+                x:Name="IdEntry"
+                Placeholder="Enter ID"
+                Text="KGRB"
+                IsVisible="True"
+                HorizontalOptions="Fill"
+                BackgroundColor="#ECF0F1"
+                TextColor="#2C3E50"
+                MaxLength="5"
+                WidthRequest="200" />
             <!-- Fixed Width -->
         </HorizontalStackLayout>
 
         <!-- City Input -->
-        <HorizontalStackLayout 
+        <HorizontalStackLayout
             Grid.Row="2"
             Grid.ColumnSpan="2"
             Spacing="10"
             VerticalOptions="Center">
 
-            <Label 
-                   Text="City"
-                   WidthRequest="80"
-                   VerticalOptions="Center"
-                   TextColor="#34495E" />
+            <Label
+                Text="City"
+                WidthRequest="80"
+                VerticalOptions="Center"
+                TextColor="#34495E" />
 
-            <Entry 
-                   x:Name="CityEntry"
-                   Placeholder="Enter City" 
-                   Text="Green Bay"
-                   HorizontalOptions="Fill"
-                   BackgroundColor="#ECF0F1" 
-                   TextColor="#2C3E50"
-                   MaxLength="25" 
-                   WidthRequest="200" />
+            <Entry
+                x:Name="CityEntry"
+                Placeholder="Enter City"
+                Text="Green Bay"
+                HorizontalOptions="Fill"
+                BackgroundColor="#ECF0F1"
+                TextColor="#2C3E50"
+                MaxLength="25"
+                WidthRequest="200" />
             <!-- Fixed Width -->
         </HorizontalStackLayout>
 
         <!-- Date Visited Input -->
-        <HorizontalStackLayout 
-            Grid.Row="3" 
+        <HorizontalStackLayout
+            Grid.Row="3"
             Grid.ColumnSpan="2"
-            Spacing="10" 
+            Spacing="10"
             VerticalOptions="Center">
-            <Label Text="Date" 
-                   WidthRequest="80" 
-                   VerticalOptions="Center" 
+            <Label Text="Date"
+                   WidthRequest="80"
+                   VerticalOptions="Center"
                    TextColor="#34495E" />
 
             <Grid RowDefinitions="250"
                   ColumnDefinitions="250">
 
-                <calendar:SfCalendar 
+                <calendar:SfCalendar
                     x:Name="Calendar"
                     View="Decade"
                     SelectionMode="Single"
@@ -98,45 +99,45 @@
         </HorizontalStackLayout>
 
         <!-- Rating Input -->
-        <HorizontalStackLayout 
-            Grid.Row="4" 
-            Grid.ColumnSpan="2" 
-            Spacing="10" 
+        <HorizontalStackLayout
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            Spacing="10"
             VerticalOptions="Center">
-            <Label Text="Rating" 
-                   WidthRequest="80" 
-                   VerticalOptions="Center" 
+            <Label Text="Rating"
+                   WidthRequest="80"
+                   VerticalOptions="Center"
                    TextColor="#34495E" />
 
             <!-- Star buttons-->
             <Grid ColumnDefinitions="*,*,*,*,*"
                   HorizontalOptions="FillAndExpand">
-                <ImageButton x:Name="starOne" 
+                <ImageButton x:Name="starOne"
                              Clicked="Star_Clicked"
-                             WidthRequest="24" 
+                             WidthRequest="24"
                              Grid.Column="0"
                              CommandParameter="1"
                              Source="ic_fluent_star_24_filled_grey" />
-                <ImageButton x:Name="starTwo" 
-                             Clicked="Star_Clicked" 
-                             WidthRequest="24" 
+                <ImageButton x:Name="starTwo"
+                             Clicked="Star_Clicked"
+                             WidthRequest="24"
                              Grid.Column="1"
                              CommandParameter="2"
                              Source="ic_fluent_star_24_filled_grey" />
-                <ImageButton x:Name="starThree" 
+                <ImageButton x:Name="starThree"
                              Clicked="Star_Clicked"
-                             WidthRequest="24" 
+                             WidthRequest="24"
                              Grid.Column="2"
                              CommandParameter="3"
                              Source="ic_fluent_star_24_filled_grey" />
-                <ImageButton x:Name="starFour" 
-                             Clicked="Star_Clicked" 
+                <ImageButton x:Name="starFour"
+                             Clicked="Star_Clicked"
                              WidthRequest="24" Grid.Column="3"
                              CommandParameter="4"
                              Source="ic_fluent_star_24_filled_grey" />
-                <ImageButton x:Name="starFive" 
-                             Clicked="Star_Clicked" 
-                             WidthRequest="24" 
+                <ImageButton x:Name="starFive"
+                             Clicked="Star_Clicked"
+                             WidthRequest="24"
                              Grid.Column="4"
                              CommandParameter="5"
                              Source="ic_fluent_star_24_filled_grey" />
@@ -144,10 +145,10 @@
         </HorizontalStackLayout>
 
         <!-- Cancel and Submit Buttons -->
-        <HorizontalStackLayout 
-            Grid.Row="5" 
-            Grid.ColumnSpan="2" 
-            Spacing="10" 
+        <HorizontalStackLayout
+            Grid.Row="5"
+            Grid.ColumnSpan="2"
+            Spacing="10"
             HorizontalOptions="Center"
             Margin="0,20,0,0">
 
@@ -155,15 +156,15 @@
                     Clicked="Cancel_Clicked"
                     BackgroundColor="#E74C3C"
                     TextColor="White"
-                    CornerRadius="10" 
+                    CornerRadius="10"
                     WidthRequest="100" />
 
             <Button Text="OK"
                     Clicked="Ok_Clicked"
                     BackgroundColor="#2ECC71"
                     TextColor="White"
-                CornerRadius="10" 
-                WidthRequest="100" />
+                    CornerRadius="10"
+                    WidthRequest="100" />
         </HorizontalStackLayout>
     </Grid>
 </toolkit:Popup>
