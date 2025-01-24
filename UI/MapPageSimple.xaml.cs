@@ -31,12 +31,10 @@ public partial class MapPageSimple : ContentPage
 		map.Navigator.ZoomToBox(wisconsinBox);
 		MyMapControl.Map = map;
 
-		Console.WriteLine($"Dimensions are {Width} x {Height}");
 	}
 	protected override void OnSizeAllocated(double width, double height)
 	{
 		base.OnSizeAllocated(width, height);
-		Console.WriteLine($"MapControl actual size: Width={MyMapControl.Width}, Height={MyMapControl.Height}");
 	}
 
 }

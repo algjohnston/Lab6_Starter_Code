@@ -92,7 +92,7 @@
                                     Text="{
                                         Binding ., 
                                         Converter={StaticResource AirportToMilesConverter},
-                                        StringFormat='1{0:F1} NM'
+                                        StringFormat='{0:F1} NM'
                                     }" />
                                 <!--  <Image
                                     VerticalOptions="Center"
@@ -103,7 +103,6 @@
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-
                 </CollectionView>
             </ScrollView>
         </Grid>

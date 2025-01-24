@@ -22,10 +22,8 @@ public class AirportToMilesConverter: IValueConverter
     
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        Console.WriteLine("Greetings from Convert()");
         if (value is WisconsinAirport airport)
         {
-            Console.WriteLine($"Processing {airport.Id}");
             // It is possible for Convert to be called before ConvertAll, so the guard is necessary.
             bool found = _idToMiles.TryGetValue(airport.Id, out var airportMiles);
             if (found)

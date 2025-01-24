@@ -57,5 +57,9 @@ public partial class NearbyAirportsPage : ContentPage
         }
 
         businessLogic.CalculateNearbyAirports(airport, distanceMile);
+        
+        // May be needed to get the correct distances
+        AirportList.ItemsSource = null;
+        AirportList.ItemsSource = businessLogic.NearbyAirports;
     }
 }

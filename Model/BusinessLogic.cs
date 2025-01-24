@@ -228,7 +228,6 @@ public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
 
     public async Task<ObservableCollection<VisitedAirport>> GetVisitedAirports()
     {
-        Console.WriteLine($"I am being called at {DateTime.Now}");
         try
         {
             ObservableCollection<VisitedAirport> airports = await db.SelectAllVisitedAirports(); // grab all the airports

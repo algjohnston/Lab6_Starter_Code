@@ -7,6 +7,7 @@ public interface IBusinessLogic : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
     ObservableCollection<VisitedAirport> VisitedAirports { get; }
+    public ObservableCollection<WisconsinAirport> NearbyAirports { get; }
     Route CurrentRoute { get; set; }
     Task<AirportAdditionError> AddAirport(string id, string name, DateTime dateVisited, int rating);
     Task<AirportDeletionError> DeleteAirport(string id);

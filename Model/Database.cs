@@ -74,7 +74,6 @@ public partial class DatabaseSupa : IDatabaseSupa
             using StreamReader reader = new StreamReader(stream);
             string jsonAirports = await reader.ReadToEndAsync();
             wisconsinAirportsMap = JsonSerializer.Deserialize<Dictionary<String, WisconsinAirport>>(jsonAirports)!;
-            Console.WriteLine($"Here is one airport (KATW):{wisconsinAirportsMap["KATW"]}");
         }
         catch (Exception ex)
         {

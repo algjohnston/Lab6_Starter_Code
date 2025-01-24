@@ -20,7 +20,6 @@ public partial class EnterAirportDetailsPopup : Popup
     public EnterAirportDetailsPopup(VisitedAirport? airport)
     {
         InitializeComponent();
-        Console.WriteLine("Popup Opened");
         if (airport != null) // only null if it's an edit
         {
             isEdit = true; // technically we could use whether airportToEditId is null to check this, but this is more clear
