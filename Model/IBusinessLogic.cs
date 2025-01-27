@@ -5,7 +5,7 @@ namespace FWAPPA.Model;
 
 public interface IBusinessLogic : INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler PropertyChanged;
+    public new event PropertyChangedEventHandler PropertyChanged;
     ObservableCollection<VisitedAirport> VisitedAirports { get; }
     public ObservableCollection<WisconsinAirport> NearbyAirports { get; }
     Route CurrentRoute { get; set; }
@@ -16,7 +16,8 @@ public interface IBusinessLogic : INotifyPropertyChanged
     string CalculateStatistics();
     Task<ObservableCollection<VisitedAirport>> GetVisitedAirports();
     ObservableCollection<WisconsinAirport> GetWisconsinAirports();
-    Weather GetClosestAirportWeather(string? airport = null);
+    WisconsinAirport? FindClosestAirport();
+    Weather? GetClosestAirportWeather(string? airport = null);
     void CalculateNearbyAirports(WisconsinAirport sourceAirport, int maxMiles);
     ObservableCollection<WisconsinAirport> GetAllWisconsinAirports();
 

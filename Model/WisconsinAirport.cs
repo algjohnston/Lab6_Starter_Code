@@ -9,7 +9,7 @@ public class WisconsinAirport
 {
 
     [Index(0)]
-    public String Id { get; set; }
+    public String Id { get; }
 
     [Index(1)]
     public String Name { get; set; }

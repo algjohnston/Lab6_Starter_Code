@@ -24,8 +24,9 @@ public partial class EnterAirportDetailsPopup : Popup
         {
             TitleLabel.Text = "Edit Airport";
             isEdit = true; // technically we could use whether airportToEditId is null to check this, but this is more clear
-            IdLabel.IsVisible = false;
             airportToEditId = airport.Id;
+            IdEntry.IsEnabled = false;
+            IdEntry.Text = airportToEditId;
             CityEntry.Text = airport.Name;
             Calendar.View = CalendarView.Month;
             Calendar.SelectedDate = airport.DateVisited;
@@ -34,6 +35,13 @@ public partial class EnterAirportDetailsPopup : Popup
         else // Default the Calendar to Today's date
         {
             TitleLabel.Text = "Add Airport";
+            WisconsinAirport? closestAirport = MauiProgram.BusinessLogic.FindClosestAirport();
+            if (closestAirport != null)
+            {
+                IdEntry.Text = closestAirport.Id;
+                CityEntry.Text = closestAirport.Name;
+            }
+
             DateTime today = DateTime.Today;
             Calendar.View = CalendarView.Month;
             Calendar.DisplayDate = today;
@@ -169,8 +177,6 @@ public partial class EnterAirportDetailsPopup : Popup
 
         IToast errorMessageToast = Toast.Make(errorMessage, ToastDuration.Long);
         await errorMessageToast.Show();
-
-        //mainCV.SelectedItem = MauiProgram.BusinessLogic.FindAirport(id);
     }
 
 

@@ -286,5 +286,28 @@ public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
         double distanceInMiles = distanceInMeters * MILES_PER_METER;
         return distanceInMiles;
     }
+
+    public WisconsinAirport? FindClosestAirport()
+    {
+        WisconsinAirport? closestAirport = null;
+        double closestDistance = double.MaxValue;
+        ObservableCollection<WisconsinAirport> allAirports = GetWisconsinAirports();
+        Coordinates currentCoordinates = GetCurrentCoordinates();
+
+        foreach (WisconsinAirport destinationAirport in allAirports)
+        {
+            double distanceInMiles = GetDistanceBetweenCoordinates(
+                currentCoordinates,
+                destinationAirport.Coordinates
+            );
+            if (distanceInMiles < closestDistance)
+            {
+                closestAirport = destinationAirport;
+                closestDistance = distanceInMiles;
+            }
+        }
+
+        return closestAirport;
+    }
     
 }

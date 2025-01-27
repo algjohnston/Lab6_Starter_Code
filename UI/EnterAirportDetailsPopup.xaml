@@ -38,7 +38,6 @@
             <Entry
                 x:Name="IdEntry"
                 Placeholder="Enter ID"
-                Text="KGRB"
                 IsVisible="True"
                 HorizontalOptions="Fill"
                 BackgroundColor="#ECF0F1"
@@ -64,7 +63,6 @@
             <Entry
                 x:Name="CityEntry"
                 Placeholder="Enter City"
-                Text="Green Bay"
                 HorizontalOptions="Fill"
                 BackgroundColor="#ECF0F1"
                 TextColor="#2C3E50"
