@@ -2,21 +2,30 @@ using System.Collections.ObjectModel;
 
 namespace FWAPPA.Model;
 
-public class Route {
+public class Route
+{
     // Start and end nodes
     public RoutePoint Start => Edges.FirstOrDefault()?.From;
     public RoutePoint End => Edges.LastOrDefault()?.To;
+
     public double Length => Edges.Select(edge => edge.Distance).Aggregate((a, b) => a + b);
+
     // Generate a list of all the points
-    public List<RoutePoint> Points {
-        get {
+    public List<RoutePoint> Points
+    {
+        get
+        {
             List<RoutePoint> points = [];
-            if (Edges.Count > 0) {
-                foreach (RouteEdge edge in Edges) {
+            if (Edges.Count > 0)
+            {
+                foreach (RouteEdge edge in Edges)
+                {
                     points.Add(edge.From);
                 }
+
                 points.Add(Edges.Last().To);
             }
+
             return points;
         }
     }
@@ -25,7 +34,7 @@ public class Route {
     // Collection of edges
     public ObservableCollection<RouteEdge> Edges { get; set; }
 
-    public Route() 
+    public Route()
     {
         Edges = [];
     }
@@ -33,7 +42,7 @@ public class Route {
     // Constructor to initialize the Route with start, end, and edges
     public Route(RoutePoint start, RoutePoint end)
     {
-        Edges = [ new(start, end) ];
+        Edges = [new(start, end)];
     }
 
     // Method to add a point on the end
@@ -47,11 +56,14 @@ public class Route {
     /// </summary>
     /// <param name="points">The points to get to on the route, starts and ends with the first in the list.</param>
     /// <returns>A decent route that visits each non-starting points exactly once.</returns>
-    public static Route GenerateTravelingSalesmanRoute(List<RoutePoint> points) {
+    public static Route GenerateTravelingSalesmanRoute(List<RoutePoint> points)
+    {
         // We need at least 2 points
-        if (points.Count < 2) {
+        if (points.Count < 2)
+        {
             return null;
         }
+
         List<RoutePoint> mutPoints = points.Skip(1).ToList();
 
         // Get the first step (nearest neighbor) for route object creation
@@ -62,7 +74,8 @@ public class Route {
         Route route = new(source, firstStep);
 
         // Using nearest neighbor, get the path we should take
-        while (mutPoints.Count > 0) {
+        while (mutPoints.Count > 0)
+        {
             RoutePoint last = route.End;
             RoutePoint closest = mutPoints.MinBy(last.DistanceFrom);
             route.AddPointOnEnd(closest);
@@ -97,15 +110,17 @@ public class RoutePoint
     public double Y { get; set; }
     public WisconsinAirport Airport { get; set; }
 
-    public RoutePoint(WisconsinAirport airport) {
+    public RoutePoint(WisconsinAirport airport)
+    {
         Airport = airport;
         X = airport.Longitude;
         Y = airport.Latitude;
     }
 
-    public double DistanceFrom(RoutePoint other) {
-        return BusinessLogic.GetDistanceFromAirportCoordinates(
-            new(null, null, (float) Y, (float) X, null),
-            new(null, null, (float) other.Y, (float) other.X, null)) * NM_PER_MI;
+    public double DistanceFrom(RoutePoint other)
+    {
+        return BusinessLogic.GetDistanceBetweenCoordinates(
+            new Coordinates((float)Y, (float)X),
+            new Coordinates((float)other.Y, (float)other.X)) * NM_PER_MI;
     }
 }

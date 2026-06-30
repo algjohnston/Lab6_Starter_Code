@@ -1,31 +1,27 @@
 using System.Collections.ObjectModel;
 
-//using CommunityToolkit.Maui.Core.Extensions;
-
 namespace FWAPPA.Model;
 
 public partial class BusinessLogic : IBusinessLogic
 {
-
-    // private ObservableCollection<AirportCoordinates> airportCoordinates;
-
-    // partial void LoadAirportCoordinates()
-    // {
-    //     airportCoordinates = db.SelectAllAirportCoordinates();
-    // }
-
-
-
-    public Weather ClosestAirportWeather
+    private Weather? airportWeather;
+    public Weather? AirportWeather
     {
-        get { return GetClosestAirportWeather(); }
-
+        get => airportWeather;
+        set
+        {
+            if (airportWeather != value)
+            {
+                airportWeather = value;
+                OnPropertyChanged(nameof(AirportWeather));
+            }
+        }
     }
-
-    public Weather GetClosestAirportWeather()
+    
+    public Weather GetClosestAirportWeather(string? airport = null)
     {
-        string airport = "";
-        airport = FindClosestAirport();
+        airport ??= FindClosestAirport();
+
         HttpClient aviationWeatherCenter = new HttpClient();
         try
         {
@@ -33,12 +29,20 @@ public partial class BusinessLogic : IBusinessLogic
             var metar = aviationWeatherCenter.GetStringAsync(metarUrl).Result;
             var tafUrl = "https://aviationweather.gov/api/data/taf?ids=" + airport + "&format=raw";
             var taf = aviationWeatherCenter.GetStringAsync(tafUrl).Result;
-            return new Weather(airport, metar, taf);
+
+            if (metar == "" && taf == "")
+            {
+                metar = "Invalid airport id";
+                taf = "Invalid airport id";
+            }
+            AirportWeather = new Weather(airport, metar, taf);
         }
         catch (Exception ex)
         {
-            return new Weather("Catch", ex.Message, "Catch");
+            AirportWeather = new Weather("Catch", ex.Message, "Catch");
         }
+
+        return AirportWeather;
     }
 
     /// <summary>
@@ -51,52 +55,34 @@ public partial class BusinessLogic : IBusinessLogic
         double closestDistance = double.MaxValue;
 
         ObservableCollection<WisconsinAirport> allAirports = GetWisconsinAirports();
-
-        WisconsinAirport currentCoordinates = GetCurrentCoordinates();
+        Coordinates currentCoordinates = GetCurrentCoordinates();
 
         foreach (WisconsinAirport destinationAirport in allAirports)
         {
-            WisconsinAirport? destinationAirportCoordinates = WisconsinAirports.FirstOrDefault(wisconsinAirport => wisconsinAirport!.Id == destinationAirport.Id, null);
-
-            if (destinationAirportCoordinates != null)
+            double distanceInMiles = GetDistanceBetweenCoordinates(
+                currentCoordinates,
+                destinationAirport.Coordinates
+            );
+            if (distanceInMiles < closestDistance)
             {
-                // Haversine formula to find distance between two points
-                double sourceLatitudeRadians = currentCoordinates.Latitude * (Math.PI / 180);
-                double destinationLatitudeRadians = destinationAirportCoordinates.Latitude * (Math.PI / 180);
-                double latitudeDiffRadians =
-                    (destinationAirportCoordinates.Latitude - currentCoordinates.Latitude) * (Math.PI / 180);
-                double longitudeDiffRadians =
-                    (destinationAirportCoordinates.Longitude - currentCoordinates.Longitude) * (Math.PI / 180);
-                double flatDistance = Math.Pow(Math.Sin(latitudeDiffRadians / 2.0), 2.0) +
-                                      (Math.Cos(sourceLatitudeRadians) *
-                                       Math.Cos(destinationLatitudeRadians) *
-                                       Math.Pow(Math.Sin(longitudeDiffRadians / 2.0), 2.0));
-                double angularDistance = 2 * Math.Atan2(Math.Sqrt(flatDistance), Math.Sqrt(1 - flatDistance));
-                double distanceInMeters = EARTH_RADIUS_IN_METERS * angularDistance;
-                double distanceInMiles = distanceInMeters * MILES_PER_METER;
-                if (distanceInMiles < closestDistance)
-                {
-                    closestAirport = destinationAirport.Id;
-                    closestDistance = distanceInMiles;
-                }
+                closestAirport = destinationAirport.Id;
+                closestDistance = distanceInMiles;
             }
         }
+
         return closestAirport;
     }
 
-    private WisconsinAirport GetCurrentCoordinates()
+    private static Coordinates GetCurrentCoordinates()
     {
         var currLocation = Geolocation.GetLastKnownLocationAsync().Result;
-        float lat = (float)currLocation.Latitude;
-        float lon = (float)currLocation.Longitude;
         if (currLocation == null)
         {
-            return new WisconsinAirport("", "", 0f, 0f, "");
+            return new Coordinates(0f, 0f);
         }
-        else
-        {
-            return new WisconsinAirport("", "", lat, lon, "");
-        }
-    }
 
+        float lat = (float)currLocation.Latitude;
+        float lon = (float)currLocation.Longitude;
+        return new Coordinates(lat, lon);
+    }
 }

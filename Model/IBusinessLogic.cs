@@ -16,7 +16,7 @@ public interface IBusinessLogic : INotifyPropertyChanged
     string CalculateStatistics();
     Task<ObservableCollection<VisitedAirport>> GetVisitedAirports();
     ObservableCollection<WisconsinAirport> GetWisconsinAirports();
-    Weather GetClosestAirportWeather();
+    Weather GetClosestAirportWeather(string? airport = null);
     void CalculateNearbyAirports(WisconsinAirport sourceAirport, int maxMiles);
     ObservableCollection<WisconsinAirport> GetAllWisconsinAirports();
 

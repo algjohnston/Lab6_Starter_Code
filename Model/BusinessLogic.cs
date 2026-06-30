@@ -258,4 +258,33 @@ public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
     {
         return db.GetAllWisconsinAirports();
     }
+    
+    /// <summary>
+    /// Uses the Haversine formula to find the great-circle distance between two coordinates.
+    /// </summary>
+    /// <param name="sourceCoordinates">The source coordinates.</param>
+    /// <param name="destinationCoordinates">The destination coordinates.</param>
+    /// <returns>The great-circle distance between the given coordinates.</returns>
+    public static double GetDistanceBetweenCoordinates(
+        Coordinates sourceCoordinates,
+        Coordinates destinationCoordinates
+    )
+    {
+        // Haversine formula to find distance between two points
+        double sourceLatitudeRadians = sourceCoordinates.Latitude * (Math.PI / 180);
+        double destinationLatitudeRadians = destinationCoordinates.Latitude * (Math.PI / 180);
+        double latitudeDiffRadians =
+            (destinationCoordinates.Latitude - sourceCoordinates.Latitude) * (Math.PI / 180);
+        double longitudeDiffRadians =
+            (destinationCoordinates.Longitude - sourceCoordinates.Longitude) * (Math.PI / 180);
+        double flatDistance = Math.Pow(Math.Sin(latitudeDiffRadians / 2.0), 2.0) +
+                              (Math.Cos(sourceLatitudeRadians) *
+                               Math.Cos(destinationLatitudeRadians) *
+                               Math.Pow(Math.Sin(longitudeDiffRadians / 2.0), 2.0));
+        double angularDistance = 2 * Math.Atan2(Math.Sqrt(flatDistance), Math.Sqrt(1 - flatDistance));
+        double distanceInMeters = EARTH_RADIUS_IN_METERS * angularDistance;
+        double distanceInMiles = distanceInMeters * MILES_PER_METER;
+        return distanceInMiles;
+    }
+    
 }

@@ -9,6 +9,16 @@ namespace FWAPPA.UI;
 public partial class EnterAirportDetailsPopup : Popup
 {
     private readonly bool isEdit;
+
+    public static readonly BindableProperty PopupTitleProperty =
+        BindableProperty.Create(nameof(PopupTitle), typeof(string), typeof(EnterAirportDetailsPopup), "Add Airport");
+
+    public string PopupTitle
+    {
+        get => (string)GetValue(PopupTitleProperty);
+        set => SetValue(PopupTitleProperty, value);
+    }
+    
     private const string GreyStarPath = "ic_fluent_star_24_filled_grey.png";
     private const string YellowStarPath = "ic_fluent_star_24_filled_yellow.png";
     private string id = "";
@@ -20,9 +30,12 @@ public partial class EnterAirportDetailsPopup : Popup
     public EnterAirportDetailsPopup(VisitedAirport? airport)
     {
         InitializeComponent();
+        BindingContext = this;
+
         if (airport != null) // only null if it's an edit
         {
             isEdit = true; // technically we could use whether airportToEditId is null to check this, but this is more clear
+            PopupTitle = "Edit Airport"; // this could be done with a converter, but this seems simpler
             IdLabel.IsVisible = false;
             IdEntry.IsVisible = false;
             IdEntry.Text = airport.Id; // This is not visible ???
@@ -34,6 +47,7 @@ public partial class EnterAirportDetailsPopup : Popup
         }
         else // Default the Calendar to Today's date
         {
+            PopupTitle = "Add Airport";
             DateTime today = DateTime.Today;
             Calendar.View = CalendarView.Month;
             Calendar.DisplayDate = today;

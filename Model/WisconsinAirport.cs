@@ -24,6 +24,8 @@ public class WisconsinAirport
     public String Url { get; set; }
 
     public double Distance {get;set;}
+    
+    public Coordinates Coordinates {get;}
 
     public WisconsinAirport(String id, String name, double latitude, double longitude, string url){
         Id = id;
@@ -31,6 +33,7 @@ public class WisconsinAirport
         Latitude = latitude;
         Longitude = longitude;
         Url = url;
+        Coordinates = new Coordinates(latitude, longitude);
     }
 
     override
